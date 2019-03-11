@@ -1,4 +1,4 @@
-package com.xujm.collection.leetcode;
+package com.xujm.leetcode;
 
 import java.util.HashMap;
 
