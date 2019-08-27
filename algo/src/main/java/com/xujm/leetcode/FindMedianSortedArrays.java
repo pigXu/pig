@@ -23,25 +23,25 @@ public class FindMedianSortedArrays {
             n = m;
             m = nums2.length;
         }
-        int L1 = 0, R1 = 0, L2 = 0, R2 = 0, c1 = 0, c2 = 0, lo = 0;
+        int l1 = 0, r1 = 0, l2 = 0, r2 = 0, c1 = 0, c2 = 0, lo = 0;
         int h = 2 * n;
         while (lo <= h) {
             c1 = (lo + h) / 2;
             c2 = m + n - c1;
-            L1 = (c1 == 0) ? Integer.MIN_VALUE : nums1[(c1 - 1) / 2];
-            R1 = (c1 == 2 * n) ? Integer.MAX_VALUE : nums1[c1 / 2];
-            L2 = (c2 == 0) ? Integer.MIN_VALUE : nums2[(c2 - 1) / 2];
-            R2 = (c2 == 2 * m) ? Integer.MAX_VALUE : nums2[c2 / 2];
-            if (L1 > R2) {
+            l1 = (c1 == 0) ? Integer.MIN_VALUE : nums1[(c1 - 1) / 2];
+            r1 = (c1 == 2 * n) ? Integer.MAX_VALUE : nums1[c1 / 2];
+            l2 = (c2 == 0) ? Integer.MIN_VALUE : nums2[(c2 - 1) / 2];
+            r2 = (c2 == 2 * m) ? Integer.MAX_VALUE : nums2[c2 / 2];
+            if (l1 > r2) {
                 h = c1 - 1;
-            } else if (L2 > R1) {
+            } else if (l2 > r1) {
                 lo = c1 + 1;
             } else {
                 break;
             }
         }
 
-        return (Math.max(L1, L2) + Math.min(R2, R1)) / 2f;
+        return (Math.max(l1, l2) + Math.min(r2, r1)) / 2f;
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.xujm.DeferredResult;
+package com.xujm.deferred.result;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -13,12 +13,19 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.Collection;
 
+
+/**
+ * @Author: xujm
+ * @Date: 2019/08/07
+ */
 @RestController
 public class Controller {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Multimap<String, DeferredResult<String>> watchRequests = Multimaps.synchronizedSetMultimap(HashMultimap.create());
 
-    // 模拟长轮询
+    /**
+     * 模拟长轮询
+     */
     @RequestMapping(value = "/watch/{namespace}", method = RequestMethod.GET, produces = "text/html")
     public DeferredResult<String> watch(@PathVariable("namespace") String namespace) {
         logger.info("Request received");
@@ -38,7 +45,9 @@ public class Controller {
         return deferredResult;
     }
 
-    // 模拟发布namespace配置
+    /**
+     * 模拟发布namespace配置
+     */
     @RequestMapping(
             value = "/publish/{namespace}",
             method = RequestMethod.GET,
