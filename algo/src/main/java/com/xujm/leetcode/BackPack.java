@@ -24,37 +24,32 @@ public class BackPack {
 
     /**
      * 动态规划
+     * 时间复杂度O(n*w) 空间复杂度O(w)
      *
      * @param weight 物品重量
      * @param n      物品个数
      * @param w      背包可承重重量
      */
     public static int knapsack(int[] weight, int n, int w) {
-        boolean[][] states = new boolean[n][w];
+        boolean[] states = new boolean[w + 1];
         //第一行数据特殊处理
-        states[0][0] = true;
-        if (weight[0] < w) {
-            states[0][weight[0]] = true;
+        states[0] = true;
+        if (weight[0] <= w) {
+            states[weight[0]] = true;
         }
         //动态规划状态转移
         for (int i = 1; i < n; i++) {
-            //不把第i个物品放入背包
-            for (int j = 0; j < w; j++) {
-                if (states[i - 1][j]) {
-                    states[i][j] = true;
-                }
-            }
             //把第i个物品放入背包
-            for (int j = 0; j < w - weight[i]; j++) {
-                if (states[i - 1][j]) {
-                    states[i][j + weight[i]] = true;
+            for (int j = w - weight[i]; j > -1; j--) {
+                if (states[j]) {
+                    states[j + weight[i]] = true;
                 }
             }
         }
         //输出结果
-        for (int i = w - 1; i > -1; i--) {
-            if (states[n - 1][i]) {
-                return i + 1;
+        for (int i = w; i > -1; i--) {
+            if (states[i]) {
+                return i;
             }
         }
 
@@ -69,6 +64,7 @@ public class BackPack {
 
     /**
      * 回溯算法
+     * 时间复杂度O(n*n)
      */
     public static void f(int i, int cw) {
         //i==n代表放满 cw=w代表考察完
