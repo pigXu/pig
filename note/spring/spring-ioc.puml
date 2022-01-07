@@ -1,0 +1,111 @@
+@startuml
+interface Resource{
+
+}
+
+interface AliasRegistry
+
+interface BeanDefinitionRegistry{
+    + void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
+}
+
+interface BeanFactory{
+
+}
+
+interface BeanDefinitionReader{
+    + int loadBeanDefinitions(Resource resource)
+    + BeanDefinitionRegistry getRegistry()
+    + ResourceLoader getResourceLoader()
+}
+
+interface ResourceLoader{
+
+}
+
+interface BeanNameGenerator{
+    + String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry)
+}
+
+class DefaultListableBeanFactory
+
+interface BeanDefinitionDocumentReader{
+    + void registerBeanDefinitions(Document doc, XmlReaderContext readerContext)
+}
+
+interface InputStreamSource {
+    + InputStream getInputStream() throws IOException;
+}
+
+class DefaultBeanDefinitionDocumentReader{
+    - void parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate)
+}
+class BeanDefinitionParserDelegate
+
+interface NamespaceHandler{
+    + BeanDefinition parse(Element element, ParserContext parserContext)
+    + BeanDefinitionHolder decorate(Node source, BeanDefinitionHolder definition, ParserContext parserContext)
+}
+
+interface NamespaceHandlerResolver{
+    + NamespaceHandler resolve(String namespaceUri)
+}
+
+abstract class AbstractAutowireCapableBeanFactory {
+    + createBean(String beanName, RootBeanDefinition mbd, Object[] args)
+}
+
+abstract class AbstractBeanFactory {
+    - Map<String, Object> singletonObjects 一级缓存
+    - Map<String, Object> earlySingletonObjects 二级缓存
+    - Map<String, ObjectFactory<?>> singletonFactories 三级缓存
+    - doGetBean(String name, Class<T> requiredType, Object[] args, boolean typeCheckOnly)
+}
+
+interface BeanPostProcessor{
+    + Object postProcessBeforeInitialization(Object bean, String beanName)
+    + Object postProcessAfterInitialization(Object bean, String beanName)
+}
+
+interface AutowireCapableBeanFactory
+
+interface SmartInstantiationAwareBeanPostProcessor
+class CommonAnnotationBeanPostProcessor{
+    __ @Resources注入入口 __
+}
+class AutowiredAnnotationBeanPostProcessor{
+    __ @Autowired注入入口 __
+}
+
+interface BeanDefinitionRegistryPostProcessor
+class ConfigurationClassPostProcessor{
+    __ @Bean等注解解析成定义入口 __
+    __ ApplicationContext在refresh方法中调用invokeBeanFactoryPostProcessors时会调用 __
+}
+
+
+BeanFactory <|.. AutowireCapableBeanFactory
+AutowireCapableBeanFactory <|.. AbstractAutowireCapableBeanFactory
+BeanDefinitionRegistry <|.. DefaultListableBeanFactory
+AbstractAutowireCapableBeanFactory <|.. DefaultListableBeanFactory
+AbstractBeanFactory <|.. AbstractAutowireCapableBeanFactory
+BeanFactory <|.. AbstractBeanFactory
+InputStreamSource <|.. Resource
+AliasRegistry <|.. BeanDefinitionRegistry
+Resource <.. BeanDefinitionReader
+BeanDefinitionRegistry <.. BeanDefinitionReader
+ResourceLoader <.. BeanDefinitionReader
+BeanNameGenerator <.. BeanDefinitionParserDelegate
+BeanDefinitionDocumentReader <.. BeanDefinitionReader
+BeanDefinitionDocumentReader <|.. DefaultBeanDefinitionDocumentReader
+BeanDefinitionParserDelegate <.. DefaultBeanDefinitionDocumentReader
+NamespaceHandler <.. BeanDefinitionParserDelegate
+NamespaceHandlerResolver <.. BeanDefinitionParserDelegate
+BeanPostProcessor <.. AbstractAutowireCapableBeanFactory
+BeanPostProcessor <|.. SmartInstantiationAwareBeanPostProcessor
+
+SmartInstantiationAwareBeanPostProcessor <|.. CommonAnnotationBeanPostProcessor
+SmartInstantiationAwareBeanPostProcessor <|.. AutowiredAnnotationBeanPostProcessor
+BeanDefinitionRegistryPostProcessor <|.. ConfigurationClassPostProcessor
+
+@enduml
