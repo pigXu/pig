@@ -84,28 +84,28 @@ class ConfigurationClassPostProcessor{
 }
 
 
-BeanFactory <|.. AutowireCapableBeanFactory
-AutowireCapableBeanFactory <|.. AbstractAutowireCapableBeanFactory
-BeanDefinitionRegistry <|.. DefaultListableBeanFactory
-AbstractAutowireCapableBeanFactory <|.. DefaultListableBeanFactory
-AbstractBeanFactory <|.. AbstractAutowireCapableBeanFactory
-BeanFactory <|.. AbstractBeanFactory
-InputStreamSource <|.. Resource
-AliasRegistry <|.. BeanDefinitionRegistry
+BeanFactory <|-- AutowireCapableBeanFactory
+AutowireCapableBeanFactory <|-- AbstractAutowireCapableBeanFactory
+BeanDefinitionRegistry <|-- DefaultListableBeanFactory
+AbstractAutowireCapableBeanFactory <|-- DefaultListableBeanFactory
+AbstractBeanFactory <|-- AbstractAutowireCapableBeanFactory
+BeanFactory <|-- AbstractBeanFactory
+InputStreamSource <|-- Resource
+AliasRegistry <|-- BeanDefinitionRegistry
 Resource <.. BeanDefinitionReader
 BeanDefinitionRegistry <.. BeanDefinitionReader
 ResourceLoader <.. BeanDefinitionReader
 BeanNameGenerator <.. BeanDefinitionParserDelegate
 BeanDefinitionDocumentReader <.. BeanDefinitionReader
-BeanDefinitionDocumentReader <|.. DefaultBeanDefinitionDocumentReader
+BeanDefinitionDocumentReader <|-- DefaultBeanDefinitionDocumentReader
 BeanDefinitionParserDelegate <.. DefaultBeanDefinitionDocumentReader
 NamespaceHandler <.. BeanDefinitionParserDelegate
 NamespaceHandlerResolver <.. BeanDefinitionParserDelegate
 BeanPostProcessor <.. AbstractAutowireCapableBeanFactory
-BeanPostProcessor <|.. SmartInstantiationAwareBeanPostProcessor
+BeanPostProcessor <|-- SmartInstantiationAwareBeanPostProcessor
 
-SmartInstantiationAwareBeanPostProcessor <|.. CommonAnnotationBeanPostProcessor
-SmartInstantiationAwareBeanPostProcessor <|.. AutowiredAnnotationBeanPostProcessor
-BeanDefinitionRegistryPostProcessor <|.. ConfigurationClassPostProcessor
+SmartInstantiationAwareBeanPostProcessor <|-- CommonAnnotationBeanPostProcessor
+SmartInstantiationAwareBeanPostProcessor <|-- AutowiredAnnotationBeanPostProcessor
+BeanDefinitionRegistryPostProcessor <|-- ConfigurationClassPostProcessor
 
 @enduml
