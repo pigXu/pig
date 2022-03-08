@@ -1,0 +1,33 @@
+@startuml
+interface ImportBeanDefinitionRegistrar
+interface SmartInstantiationAwareBeanPostProcessor
+class AspectJAutoProxyRegistrar
+annotation EnableAspectJAutoProxy
+class AnnotationAwareAspectJAutoProxyCreator
+interface Advisor
+class BeanFactoryAspectJAdvisorsBuilder
+class ProxyFactory
+interface AopProxyFactory
+class AdvisedSupport
+class ReflectiveMethodInvocation
+class InterceptorAndDynamicMethodMatcher
+interface MethodInterceptor
+
+ImportBeanDefinitionRegistrar <|-- AspectJAutoProxyRegistrar
+AspectJAutoProxyRegistrar <.. EnableAspectJAutoProxy
+AnnotationAwareAspectJAutoProxyCreator <.. AspectJAutoProxyRegistrar
+SmartInstantiationAwareBeanPostProcessor <|-- AnnotationAwareAspectJAutoProxyCreator
+Advisor <.. AnnotationAwareAspectJAutoProxyCreator
+BeanFactoryAspectJAdvisorsBuilder <.. AnnotationAwareAspectJAutoProxyCreator
+ProxyFactory <.. AnnotationAwareAspectJAutoProxyCreator
+AopProxyFactory <.. ProxyFactory
+
+ProxyFactory <|-- JdkDynamicAopProxy
+ProxyFactory <|-- ObjenesisCglibAopProxy
+
+AdvisedSupport <.. JdkDynamicAopProxy
+ReflectiveMethodInvocation <.. JdkDynamicAopProxy
+
+InterceptorAndDynamicMethodMatcher <.. ReflectiveMethodInvocation
+MethodInterceptor <.. ReflectiveMethodInvocation
+@enduml
