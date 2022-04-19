@@ -1,0 +1,102 @@
+@startuml
+
+class AnnotationAwareAspectJAutoProxyCreator
+class AspectJAwareAdvisorAutoProxyCreator
+abstract class AbstractAdvisorAutoProxyCreator
+abstract class AbstractAutoProxyCreator
+class ProxyProcessorSupport
+class ProxyConfig
+
+interface AspectJAdvisorFactory
+class ReflectiveAspectJAdvisorFactory
+class BeanFactoryAspectJAdvisorsBuilder
+interface Advisor
+interface SmartInstantiationAwareBeanPostProcessor
+interface InstantiationAwareBeanPostProcessor
+interface BeanPostProcessor
+
+class ProxyFactory
+class ProxyCreatorSupport
+class AdvisedSupport
+interface Advised
+
+interface AopProxyFactory
+class DefaultAopProxyFactory
+
+interface AopProxy
+class CglibAopProxy
+class JdkDynamicAopProxy
+
+interface AdvisorChainFactory
+class DefaultAdvisorChainFactory
+
+interface PointcutAdvisor
+interface IntroductionAdvisor
+interface AdvisorAdapterRegistry
+class DefaultAdvisorAdapterRegistry
+
+interface Pointcut
+interface MethodMatcher
+
+interface MethodInterceptor
+interface Interceptor
+interface Advice
+
+interface AdvisorAdapter
+class MethodBeforeAdviceAdapter
+class AfterReturningAdviceAdapter
+class ThrowsAdviceAdapter
+
+AspectJAwareAdvisorAutoProxyCreator <|-- AnnotationAwareAspectJAutoProxyCreator
+AbstractAdvisorAutoProxyCreator <|-- AspectJAwareAdvisorAutoProxyCreator
+AbstractAutoProxyCreator <|-- AbstractAdvisorAutoProxyCreator
+ProxyProcessorSupport <|-- AbstractAutoProxyCreator
+ProxyConfig <|-- ProxyProcessorSupport
+AspectJAdvisorFactory <|-- ReflectiveAspectJAdvisorFactory
+
+AspectJAdvisorFactory <.. BeanFactoryAspectJAdvisorsBuilder
+BeanFactoryAspectJAdvisorsBuilder <.. AnnotationAwareAspectJAutoProxyCreator
+Advisor <.. AspectJAdvisorFactory
+SmartInstantiationAwareBeanPostProcessor <|-- AbstractAutoProxyCreator
+InstantiationAwareBeanPostProcessor <|-- SmartInstantiationAwareBeanPostProcessor
+BeanPostProcessor <|-- InstantiationAwareBeanPostProcessor
+
+ProxyCreatorSupport <|-- ProxyFactory
+AdvisedSupport <|-- ProxyCreatorSupport
+ProxyConfig <|-- AdvisedSupport
+Advised <|-- AdvisedSupport
+
+ProxyFactory <.. AbstractAutoProxyCreator
+
+AopProxyFactory <|-- DefaultAopProxyFactory
+AopProxyFactory <.. ProxyCreatorSupport
+
+AopProxy <.. CglibAopProxy
+AopProxy <.. JdkDynamicAopProxy
+AopProxy <.. ProxyFactory
+
+AdvisedSupport <.. JdkDynamicAopProxy
+AdvisorChainFactory <.. AdvisedSupport
+AdvisorChainFactory <|-- DefaultAdvisorChainFactory
+
+Advisor <.. DefaultAdvisorChainFactory
+
+Advisor <|-- PointcutAdvisor
+Advisor <|-- IntroductionAdvisor
+
+AdvisorAdapterRegistry <|-- DefaultAdvisorAdapterRegistry
+AdvisorAdapterRegistry <.. DefaultAdvisorChainFactory
+Pointcut <.. PointcutAdvisor
+MethodMatcher <.. Pointcut
+
+Interceptor <|-- MethodInterceptor
+Advice <|-- Interceptor
+MethodInterceptor <.. DefaultAdvisorChainFactory
+
+AdvisorAdapter <.. DefaultAdvisorAdapterRegistry
+
+MethodBeforeAdviceAdapter <|-- AdvisorAdapter
+AfterReturningAdviceAdapter <|-- AdvisorAdapter
+ThrowsAdviceAdapter <|-- AdvisorAdapter
+
+@enduml
