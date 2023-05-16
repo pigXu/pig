@@ -84,9 +84,6 @@ public class Graph {
      */
     public void dfs(int s, int t) {
         boolean[] visited = new boolean[v];
-        visited[s] = true;
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(s);
         int[] pre = new int[v];
         for (int i = 0; i < v; i++) {
             pre[i] = -1;
